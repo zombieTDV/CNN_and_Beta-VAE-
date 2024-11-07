@@ -1,5 +1,6 @@
 Overview:    
--My newest version on AvK( my library for Deep learning, you can think of it like a meme copy of Tensorflow or Pytorch ), this time, I added tons more things compared to the old version in HM_GPT  
+-My newest version on AvK( my library for Deep learning, you can think of it like a meme copy of Tensorflow or Pytorch ).   
+-This time, I added tons more things compared to the old version in HM_GPT.  
 -With roughly 2500 lines of code, I used it for Convolutional Neural Networks and Beta-Variational-Autoencoder.   
 -I added a lot of comments, documents, and overviews of every file.   
 
