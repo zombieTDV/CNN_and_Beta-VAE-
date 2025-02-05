@@ -865,8 +865,8 @@ class Tensor:
         KL_divergence_closed_form =  mean**2 + log_var.exp(eps=1e-5) - 1 - log_var
         KL_divergence_closed_form = KL_divergence_closed_form.sum() / (2) #negtive
 
-        ELBO = -MSE + (Beta * -KL_divergence_closed_form)
-        NELBO = -ELBO
+        ELBO = -MSE + (Beta * -KL_divergence_closed_form) #maximize ELBO is the task!
+        NELBO = -ELBO #But since we are optimize it using 'Gradient descent', we need to 'minimize' the negative ELBO instead!
         
         return MSE, KL_divergence_closed_form, NELBO
     
