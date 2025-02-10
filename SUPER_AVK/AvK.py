@@ -732,7 +732,7 @@ class Tensor:
         assert self.data.size == target.data.size, 'x and target have different size( MSE require x and target to have the same size)'
 
         return ((self.flatten() - target.flatten())**2).sum(axis=(0)) / (self.data.size)
-    
+        
 
     def KL_divergence(self, target):
         """
