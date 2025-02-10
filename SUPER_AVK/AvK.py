@@ -774,12 +774,11 @@ class Tensor:
         assert self.data.size == target.data.size, 'x and target have different size( ELBO require x and target to have the same size)'
         
         MSE = self.MSE(target)
-        KL_divergence_closed_form =  mean**2 + log_var.exp(eps=1e-5) - 1 - log_var
-        KL_divergence_closed_form = KL_divergence_closed_form.sum() / (2) #negtive
+        KL_divergence_closed_form =  1 + log_var - mean**2 - log_var.exp(eps=1e-5)  #This is actually the negative KL_D 
+        KL_divergence_closed_form = KL_divergence_closed_form.sum() / (2) 
 
-        ELBO = -MSE + (Beta * -KL_divergence_closed_form) #maximize ELBO is the task!
-        NELBO = -ELBO #But since we are optimize it using 'Gradient descent', we need to 'minimize' the negative ELBO instead!
-        
+        # ELBO = -MSE + (Beta * KL_divergence_closed_form) #maximize ELBO is the task!
+        NELBO = MSE - (Beta * KL_divergence_closed_form)#But since we are optimize it using 'Gradient descent', we need to 'minimize' the negative ELBO instead!
         return MSE, KL_divergence_closed_form, NELBO
     
     def VQ_VAE_loss(self, encoder_output, codebook_vector, target, Beta = 1):
