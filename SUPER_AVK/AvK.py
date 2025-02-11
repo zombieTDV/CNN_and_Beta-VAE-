@@ -755,7 +755,7 @@ class Tensor:
 
         return KL_D.sum(axis=AXIS) / N
     
-    def ELBO(self, mean, log_var, target, Beta = 1):
+    def ELBO(self, mean, log_var, target, Beta = 1, C = 0):
         """
         Compute the Evidence Lower Bound (ELBO) for variational autoencoders.
 
@@ -778,7 +778,11 @@ class Tensor:
         KL_divergence_closed_form = KL_divergence_closed_form.sum() / (2) 
 
         # ELBO = -MSE + (Beta * KL_divergence_closed_form) #maximize ELBO is the task!
-        NELBO = MSE - (Beta * KL_divergence_closed_form)#But since we are optimize it using 'Gradient descent', we need to 'minimize' the negative ELBO instead!
+        NELBO = MSE - (Beta * KL_divergence_closed_form - C)#But since we are optimize it using 'Gradient descent', we need to 'minimize' the negative ELBO instead!
+        
+        '''capacity control parameter C. Increasing
+        C from zero to a value large enough produces good quality
+        reconstructions during training'''
         return MSE, KL_divergence_closed_form, NELBO
     
     def VQ_VAE_loss(self, encoder_output, codebook_vector, target, Beta = 1):
